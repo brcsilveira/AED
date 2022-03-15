@@ -109,7 +109,7 @@ char *listarNomes(char *nomesDaLista)
 char *removerNomes(char *nomesDaLista)
 {
     char nomeRemove[TAMANHO_DO_NOME];
-    int primeiraLetraRemove, auxiliar;
+    int primeiraLetraRemove;
 
     printf("Digite o nome: ");
     scanf("%s", nomeRemove);
