@@ -29,17 +29,17 @@ int main()
         escolha = menu();
         switch (escolha)
         {
-        case 1: //caso para inserir o nome.
+        case 1: 
             nomesDaLista = listarNomes(nomesDaLista);
             break;
         
-        case 2: //caso para remover o  nome.
+        case 2: 
            nomesDaLista = removerNomes(nomesDaLista);
            break;
-        case 3: //caso para mostrar a lista com os nomes.
+        case 3: 
             nomesListados(nomesDaLista);
             break;
-        case 4: //sair.
+        case 4: 
             free(nomesDaLista); //Libera a memória alocada.
             exit(0);
             break;
