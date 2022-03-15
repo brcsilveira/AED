@@ -118,7 +118,7 @@ char *removerNomes(char *nomesDaLista)
     
     if (verificaNome == NULL)
     {
-        printf("Este nome não está na lista.\n");
+        printf("\nEste nome não está na lista.\n\n");
         return nomesDaLista;
     }
 
