@@ -63,8 +63,8 @@ int menu(void)
     do
     {
         printf("Menu:\n");
-        printf("1) Adicionar nome.\n");
-        printf("2) Remover nome.\n");
+        printf("1) Adicionar Contato.\n");
+        printf("2) Remover Contato.\n");
         printf("3) Listar.\n");
         printf("4) Buscar.\n");
         printf("5) Sair.\n");
