@@ -185,6 +185,6 @@ void buscarNomes(void *pBuffer)
             return;
         }
     }
-    printf("Pessoa não encontrada.\n");
+    printf("\nPessoa não encontrada.\n");
     return;
 }
