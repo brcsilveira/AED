@@ -5,7 +5,7 @@
 typedef struct{
     char nome[30];
     int idade;
-    float altura;
+    int altura;
 }Pessoa;
 
 int main()
@@ -46,7 +46,7 @@ int main()
         printf("Informe a idade: ");
         scanf("%d", &agenda[contador].idade);
         printf("Informe a altura: ");
-        scanf("%f", &agenda[contador].altura);
+        scanf("%d", &agenda[contador].altura);
         contador++;
         
         getchar();
@@ -73,8 +73,8 @@ int main()
             {
                 printf("%d° USUÁRIO:\n", i + 1);
                 printf("NOME: %s\n", agenda[i].nome);
-                printf("IDADE: %d\n", agenda[i].idade);
-                printf("ALTURA: %.2f\n", agenda[i].altura);
+                printf("IDADE: %d anos\n", agenda[i].idade);
+                printf("ALTURA: %d cm\n", agenda[i].altura);
             }
             
          free(agenda);
