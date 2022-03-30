@@ -21,17 +21,15 @@ int main()
 {
     void *pBuffer = NULL;
     
-    pBuffer = malloc(sizeof(int) * 3 + sizeof(char) * 11);
-
+    pBuffer = malloc(sizeof(int) * 3 + sizeof(char) * 11); 
     if (pBuffer == NULL)
     {
         printf("ERRO: Sem memória.\n");
         exit(1);
     }
     
-    int *escolha = &*(int *)(pBuffer);
-    *(int *)(pBuffer + sizeof(int)) = 0;
-
+    int *escolha = &*(int *)(pBuffer); 
+    *(int *)(pBuffer + sizeof(int)) = 0; 
     while (1)
     {
         menu(escolha);
