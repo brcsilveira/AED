@@ -74,14 +74,14 @@ void menu(int *escolha)
     printf("\nMenu:\n");
     printf("1) Adicionar Contato.\n");
     printf("2) Remover Contato.\n");
-    printf("3) Listar.\n");
-    printf("4) Buscar.\n");
+    printf("3) Buscar.\n");
+    printf("4) Listar.\n");
     printf("5) Sair.\n");
     printf("\nDigite a sua escolha: ");
     scanf("%d", &*escolha);
 }
 
-void PUSH(int *escolha)
+void PUSH(int *pBuffer)
 {
     void *pessoa = NULL;
     
@@ -107,6 +107,8 @@ void PUSH(int *escolha)
 
     printf("Informe o telefone: ");
     scanf("%d", (int *)(pessoa + TELEFONE));
+
+    SORT(pBuffer, pessoa);
 }
 
 void SORT(void *pBuffer, void *pessoa)
@@ -138,18 +140,19 @@ void SORT(void *pBuffer, void *pessoa)
 
                 return;
             }
-        }
-        else
-        {
-            *(void **)(pessoa + ANTERIOR) = auxiliarParaPessoa;
-            *(void **)(pessoa + PROXIMO) = *(void **)(auxiliarParaPessoa + PROXIMO);
-            
-            void *pessoaTemporia = *(void **)(auxiliarParaPessoa + PROXIMO);
-            
-            *(void **)(pessoaTemporia + ANTERIOR) = pessoa;
-            *(void **)(auxiliarParaPessoa + PROXIMO) = pessoa;
+        
+            else
+            {
+                *(void **)(pessoa + ANTERIOR) = auxiliarParaPessoa;
+                *(void **)(pessoa + PROXIMO) = *(void **)(auxiliarParaPessoa + PROXIMO);
+                
+                void *pessoaTemporia = *(void **)(auxiliarParaPessoa + PROXIMO);
+                
+                *(void **)(pessoaTemporia + ANTERIOR) = pessoa;
+                *(void **)(auxiliarParaPessoa + PROXIMO) = pessoa;
 
-            return;
+                return;
+            }
         }
 
         auxiliarParaPessoa = *(void **)(auxiliarParaPessoa + ANTERIOR);
@@ -181,8 +184,8 @@ void LIST(void *pBuffer)
 void PRINT(void *pessoa)
 {
     printf("NOME: %s\n", (char *)(pessoa + NOME));
-    printf("IDADE:  %d\n", (int *)(pessoa + IDADE));
-    printf("TELEFONE: %d\n", (int *)(pessoa + TELEFONE));
+    printf("IDADE:  %d\n", *(int *)(pessoa + IDADE));
+    printf("TELEFONE: %d\n", *(int *)(pessoa + TELEFONE));
 }
 
 void FIND(void *pBuffer)
@@ -190,7 +193,7 @@ void FIND(void *pBuffer)
     char *pessoaBuscar = &*(char *)(pBuffer + BUSCAR_PESSOA);
     void *pessoa = *(void **)(pBuffer + pPrimeiro);
 
-    if (EMPTY(pessoa))
+    if (pessoa == NULL)
     {
         printf("Lista vazia.\n");
         return;
@@ -203,7 +206,7 @@ void FIND(void *pBuffer)
     {
         if (strcmp(pessoaBuscar, (char *)(pessoa + NOME)) == 0)
         {
-            PRINTF(pessoa);
+            PRINT(pessoa);
             return;
         } 
 
@@ -219,7 +222,7 @@ void FIND(void *pBuffer)
 // {
 //     void *pessoa = *(void **)(pBuffer + pPrimeiro);
 
-//     if (EMPTY(pessoa))
+// if (pessoa == NULL)
 //     {
 //         printf("Lista vazia.\n");
 //         return;
