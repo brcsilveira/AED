@@ -120,8 +120,8 @@ void SORT(void *pBuffer, void *pessoa)
 
     if (auxiliarParaPessoa == NULL)
     {
-        *(void **)(pessoa + ANTERIOR) = pessoa;
-        *(void **)(pessoa + PROXIMO) = pessoa;
+        *(void **)(pessoa + pPrimeiro) = pessoa;
+        *(void **)(pessoa + pUltimo) = pessoa;
         return;
     }
 
@@ -140,7 +140,6 @@ void SORT(void *pBuffer, void *pessoa)
 
                 return;
             }
-        
             else
             {
                 *(void **)(pessoa + ANTERIOR) = auxiliarParaPessoa;
