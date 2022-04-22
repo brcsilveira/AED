@@ -3,19 +3,20 @@
 #include<string.h>
 
 void menu(int *escolha);
-void PUSH(int *escolha);
+void PUSH(int *pBuffer);
 void SORT(void *pBuffer, void *pessoa);
 void LIST(void *pBuffer);
 void PRINT(void *pessoa);
 void FIND(void *pBuffer);
 // void POP(void *pBuffer);
 void CLEAR(void *pBuffer);
-int EMPTY(void *pBuffer);
+// int EMPTY(void *pBuffer);
 
 #define ESCOLHA 0 
 #define pPrimeiro (sizeof(int))
 #define pUltimo (sizeof(int) + sizeof(void *))
 #define BUSCAR_PESSOA (sizeof(int) + sizeof(void *) * 2)
+#define REMOVER_PESSOA (sizeof(int) + sizeof(void *) * 3)
 
 #define ANTERIOR 0
 #define NOME (sizeof(void *))
@@ -66,7 +67,7 @@ int main()
         break;
         }
     }
-    // return 0;
+    return 0;
 }
 
 void menu(int *escolha)
@@ -120,8 +121,8 @@ void SORT(void *pBuffer, void *pessoa)
 
     if (auxiliarParaPessoa == NULL)
     {
-        *(void **)(pessoa + pPrimeiro) = pessoa;
-        *(void **)(pessoa + pUltimo) = pessoa;
+        *(void **)(pBuffer + pPrimeiro) = pessoa;
+        *(void **)(pBuffer + pUltimo) = pessoa;
         return;
     }
 
@@ -217,21 +218,31 @@ void FIND(void *pBuffer)
     return;
 }
 
-// void POP(void *pBuffer)
-// {
-//     void *pessoa = *(void **)(pBuffer + pPrimeiro);
+void POP(void *pBuffer)
+{
+    char *pessoaRemover = &*(char *)(pBuffer + REMOVER_PESSOA);
+    void *pessoa = *(void **)(pBuffer + pPrimeiro);
+    
+ if (pessoa == NULL)
+    {
+        printf("Lista vazia.\n");
+        return;
+    }
 
-// if (pessoa == NULL)
-//     {
-//         printf("Lista vazia.\n");
-//         return;
-//     }
+   printf("Informe a pessoa que você deseja remover da agenda: ");
+   scanf("%s", pessoaRemover);
 
-//     if (*(void **)(pessoa + PROXIMO) == NULL)
-//     {
-//         *(void **)(pBuffer + pPrimeiro) = NULL;
-//     }
-// }
+   do
+    {
+        if (strcmp(pessoaRemover, (char *)(pessoa + NOME)) == 0)
+        {
+            
+        } 
+
+        pessoa = *(void **)(pessoa + PROXIMO);
+
+    } while (pessoa != NULL);
+}
 
 void CLEAR(void *pBuffer)
 {
@@ -248,9 +259,9 @@ void CLEAR(void *pBuffer)
     free(pessoa);
 }
 
-int EMPTY(void *pBuffer)
-{
-    if (pBuffer == NULL)
-        return 0;
-    return 1;
-}
+// int EMPTY(void *pBuffer)
+// {
+//     if (pBuffer == NULL)
+//         return 0;
+//     return 1;
+// }
