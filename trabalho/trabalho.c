@@ -152,12 +152,14 @@ void SORT(void *pBuffer, void *pessoa)
 
                 return;
             }
+            
         }
 
         auxiliarParaPessoa = *(void **)(auxiliarParaPessoa + ANTERIOR);
     }
-    
     *(void **)(pessoa + PROXIMO) = *(void **)(pBuffer + pPrimeiro);
+    auxiliarParaPessoa = *(void **)(pBuffer + pPrimeiro);
+    *(void **)(auxiliarParaPessoa + ANTERIOR) = pessoa;
     *(void **)(pBuffer + pPrimeiro) = pessoa;
     
     return;
@@ -206,8 +208,6 @@ void FIND(void *pBuffer)
         if (strcmp(pessoaBuscar, (char *)(pessoa + NOME)) == 0)
         {
             PRINT(pessoa);
-            PRINT(*(void **)pessoa + PROXIMO);
-            PRINT(*(void **)pessoa + ANTERIOR);
             return;
         } 
 
@@ -289,12 +289,12 @@ void CLEAR(void *pBuffer)
 
     while (pessoa != NULL)
     {
-        auxiliarParaPessoa = *(void **)(pBuffer + pPrimeiro);
+        auxiliarParaPessoa = *(void **)(pessoa + PROXIMO);
         free(pessoa);
         pessoa = auxiliarParaPessoa;
     }
 
-    free(pessoa);
+    free(pBuffer);
 }
 
 // int EMPTY(void *pBuffer)
