@@ -12,11 +12,13 @@ void POP(void *pBuffer);
 void CLEAR(void *pBuffer);
 int EMPTY(void *pBuffer);
 
+//Estrutura de pBuffer:
 #define ESCOLHA 0 
 #define pPrimeiro (sizeof(int))
 #define pUltimo (sizeof(int) + sizeof(void *))
 #define BUSCAR_PESSOA (sizeof(int) + sizeof(void *) * 2)
 
+// Estrutura de pessoa:
 #define ANTERIOR 0
 #define NOME (sizeof(void *))
 #define IDADE (sizeof(void *) + sizeof(char) * 10)
@@ -37,8 +39,8 @@ int main()
 
     int *escolha = &*(int *)(pBuffer + ESCOLHA); 
 
-    *(void **)(pBuffer + pPrimeiro) = NULL;//pq aponta para outro ponteiro
-    *(void **)(pBuffer + pUltimo) = NULL;// ponteiro para ponteiro
+    *(void **)(pBuffer + pPrimeiro) = NULL;
+    *(void **)(pBuffer + pUltimo) = NULL;
 
     while (1)
     {
@@ -122,6 +124,7 @@ void SORT(void *pBuffer, void *pessoa)
     {
         *(void **)(pBuffer + pPrimeiro) = pessoa;
         *(void **)(pBuffer + pUltimo) = pessoa;
+        printf("\nCadastro efetuado com sucesso.\n");
         return;
     }
 
@@ -130,7 +133,8 @@ void SORT(void *pBuffer, void *pessoa)
         if (strcmp((char *)(pessoa + NOME), (char *)(auxiliarParaPessoa + NOME)) >= 0)
         {
             if (*(void**)(auxiliarParaPessoa + PROXIMO) == NULL)
-            {
+            {   
+                // Inserção no fim
                 *(void **)(pessoa + ANTERIOR) = auxiliarParaPessoa;
                 
                 void *pessoaTemporaria = *(void **)(pBuffer + pUltimo);
@@ -138,10 +142,13 @@ void SORT(void *pBuffer, void *pessoa)
                 *(void **)(pBuffer + pUltimo) = pessoa;
                 *(void **)(pessoaTemporaria + PROXIMO) = pessoa;
 
+                printf("\nCadastro efetuado com sucesso.\n");
+
                 return;
             }
             else
-            {
+            {   
+                // Inserção no meio 
                 *(void **)(pessoa + ANTERIOR) = auxiliarParaPessoa;
                 *(void **)(pessoa + PROXIMO) = *(void **)(auxiliarParaPessoa + PROXIMO);
                 
@@ -150,6 +157,8 @@ void SORT(void *pBuffer, void *pessoa)
                 *(void **)(pessoaTemporia + ANTERIOR) = pessoa;
                 *(void **)(auxiliarParaPessoa + PROXIMO) = pessoa;
 
+                printf("\nCadastro efetuado com sucesso.\n");
+
                 return;
             }
             
@@ -157,11 +166,15 @@ void SORT(void *pBuffer, void *pessoa)
 
         auxiliarParaPessoa = *(void **)(auxiliarParaPessoa + ANTERIOR);
     }
+
+    // Inserção no inicio
     *(void **)(pessoa + PROXIMO) = *(void **)(pBuffer + pPrimeiro);
     auxiliarParaPessoa = *(void **)(pBuffer + pPrimeiro);
     *(void **)(auxiliarParaPessoa + ANTERIOR) = pessoa;
     *(void **)(pBuffer + pPrimeiro) = pessoa;
     
+    printf("\nCadastro efetuado com sucesso.\n");
+
     return;
 }
 
@@ -196,7 +209,7 @@ void FIND(void *pBuffer)
     char *pessoaBuscar = &*(char *)(pBuffer + BUSCAR_PESSOA);
     void *pessoa = *(void **)(pBuffer + pPrimeiro);
 
-    if (pessoa == NULL)
+    if (EMPTY(pBuffer))
     {
         printf("\nLista vazia.\n");
         return;
@@ -211,7 +224,6 @@ void FIND(void *pBuffer)
         {
             printf("\n");
             PRINT(pessoa);
-            printf("\n");
             return;
         } 
 
@@ -219,7 +231,7 @@ void FIND(void *pBuffer)
 
     } while (pessoa != NULL);
     
-    printf("\nNome não encontrado.\n");
+    printf("\nCadastro não encontrado.\n");
     return;
 }
 
@@ -229,17 +241,17 @@ void POP(void *pBuffer)
     void *pessoa = *(void **)(pBuffer + pPrimeiro);
     void *pessoaTemporaria;
  
- if (pessoa == NULL)
+    if (EMPTY(pBuffer))
     {
         printf("\nLista vazia.\n");
         return;
     }
 
-   printf("Informe a pessoa que você deseja remover da agenda: ");
-   scanf("%s", pessoaRemover);
+    printf("Informe a pessoa que você deseja remover da agenda: ");
+    scanf("%s", pessoaRemover);
 
-   do
-    {
+    do
+     {
         if (strcmp(pessoaRemover, (char *)(pessoa + NOME)) == 0)
         {
             break;
@@ -247,15 +259,16 @@ void POP(void *pBuffer)
 
         pessoa = *(void **)(pessoa + PROXIMO);
 
-    } while (pessoa != NULL);
+     } while (pessoa != NULL);
 
     if (!pessoa)
     {
-        printf("n encontrado");
+        printf("\nCadastro não encontrado.\n");
         return;
     }        
    if(pessoa == *(void **)(pBuffer + pPrimeiro))
-   {
+   {    
+       // Remoção no inicio
        *(void **)(pBuffer + pPrimeiro) = *(void **)(pessoa + PROXIMO);
        if (pessoa == *(void **)(pBuffer + pUltimo))
        {
@@ -264,20 +277,25 @@ void POP(void *pBuffer)
        free(pessoa);
    } 
     else if(pessoa == *(void **)(pBuffer + pUltimo))
-    {
+    {   
+        // Remoção no fim
         pessoaTemporaria = *(void **)(pessoa + ANTERIOR);
         *(void **)(pBuffer + pUltimo) = *(void **)(pessoa + ANTERIOR);
        *(void **)(pessoaTemporaria + PROXIMO) = NULL;
         free(pessoa);
     }
     else
-    {
+    {   
+        // Remoção no meio
         pessoaTemporaria = *(void **)(pessoa + ANTERIOR);
         *(void **)(pessoaTemporaria + PROXIMO) = *(void **)(pessoa + PROXIMO);
         pessoaTemporaria = *(void **)(pessoa + PROXIMO);
         *(void **)(pessoaTemporaria + ANTERIOR) = *(void **)(pessoa + ANTERIOR);
         free(pessoa);
     }
+
+ printf("\nCadastro removido com sucesso.\n");
+
 }
 
 void CLEAR(void *pBuffer)
