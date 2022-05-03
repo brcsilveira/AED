@@ -9,7 +9,7 @@ typedef struct No
     struct No *pDireita;        
 } No;
 
-void insere(No **ppRaiz, int valor);
+int insere(No **ppRaiz, int valor);
 int balanceamento(No **ppRaiz);
 int fatorDeBalanceamento(No *pRaiz);
 int altura(No *pRaiz);
@@ -45,20 +45,20 @@ int main()
     return 0;
 }
 
-void insere(No **ppRaiz, int valor)
+int insere(No **ppRaiz, int valor)
 {
     if (*ppRaiz == NULL)
     {
         *ppRaiz = (No *)malloc(sizeof(No));
-        (*ppRaiz).valor = valor;
-        (*ppRaiz).pEsquerda = NULL;
-        (*ppRaiz).pDireita = NULL;
+        (*ppRaiz)->valor = valor;
+        (*ppRaiz)->pEsquerda = NULL;
+        (*ppRaiz)->pDireita = NULL;
         
         return 1;
     }
-    else if ((*ppRaiz).valor > valor)
+    else if ((*ppRaiz)->valor > valor)
     {
-        if (insere(&(*ppRaiz).pEsquerda, valor))
+        if (insere(&(*ppRaiz)->pEsquerda, valor))//pq da erro com o "."
             {
                 if (balanceamento(ppRaiz))
                 {
@@ -102,7 +102,7 @@ int fatorDeBalanceamento(No *pRaiz)
         return 0; 
     }
 
-    return altura(pRaiz.pEsquerda) - altura(pRaiz.pDireita);
+    return altura(pRaiz->pEsquerda) - altura(pRaiz->pDireita);
 }
 
 int altura(No *pRaiz)
@@ -114,8 +114,8 @@ int altura(No *pRaiz)
         return 0;
     }
 
-    esquerda = altura(pRaiz.pEsquerda);
-    direita = altura(pRaiz.pDireita);
+    esquerda = altura(pRaiz->pEsquerda);
+    direita = altura(pRaiz->pDireita);
 
     if (esquerda > direita)
     {
