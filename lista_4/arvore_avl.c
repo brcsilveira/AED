@@ -232,3 +232,14 @@ void limpaArvore(No *ppRaiz)
 
     free(ppRaiz);
 }
+
+void printArvore(No *ppRaiz)
+{
+    if (ppRaiz != NULL)
+    {
+        printf("%d(", ppRaiz->valor);
+        printArvore(ppRaiz->pEsquerda);
+        printArvore(ppRaiz->pDireita);
+        printf(")");
+    }
+}
