@@ -9,7 +9,10 @@ typedef struct No
     struct No *pDireita;        
 } No;
 
-void Insere(No **ppRaiz, int valor);
+void insere(No **ppRaiz, int valor);
+int balanceamento(No **ppRaiz);
+int fatorDeBalanceamento(No *pRaiz);
+int altura(No *pRaiz);
 
 int main()
 {
@@ -26,7 +29,7 @@ int main()
     {
         valor = rand() % 100;
         printf("\nValor sorteado: %d\n", valor);
-        Insere(&ppRaiz, valor);
+        insere(&ppRaiz, valor);
         cont++;
     }
 
@@ -42,7 +45,7 @@ int main()
     return 0;
 }
 
-void Insere(No **ppRaiz, int valor)
+void insere(No **ppRaiz, int valor)
 {
     if (*ppRaiz == NULL)
     {
@@ -55,9 +58,9 @@ void Insere(No **ppRaiz, int valor)
     }
     else if ((*ppRaiz).valor > valor)
     {
-        if (Insere(&(*ppRaiz).pEsquerda, valor))
+        if (insere(&(*ppRaiz).pEsquerda, valor))
             {
-                if (balance(ppRaiz))
+                if (balanceamento(ppRaiz))
                 {
                     return 0;
                 }
@@ -74,7 +77,7 @@ void Insere(No **ppRaiz, int valor)
     }
 }
 
-int Balanceamento(No **ppRaiz)
+int balanceamento(No **ppRaiz)
 {
     int fb = fatorDeBalanceamento(*ppRaiz);
 
@@ -89,5 +92,37 @@ int Balanceamento(No **ppRaiz)
     else
     {
         return 0;
+    }
+}
+
+int fatorDeBalanceamento(No *pRaiz)
+{
+    if (pRaiz == NULL)
+    {
+        return 0; 
+    }
+
+    return altura(pRaiz.pEsquerda) - altura(pRaiz.pDireita);
+}
+
+int altura(No *pRaiz)
+{
+    int direita, esquerda;
+
+    if (pRaiz == NULL)
+    {
+        return 0;
+    }
+
+    esquerda = altura(pRaiz.pEsquerda);
+    direita = altura(pRaiz.pDireita);
+
+    if (esquerda > direita)
+    {
+        return esquerda + 1;
+    }
+    else
+    {
+        return direita + 1;
     }
 }
