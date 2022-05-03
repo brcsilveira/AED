@@ -148,3 +148,49 @@ void rotacaoSimplesDireita(No **ppRaiz)
     pAuxiliar->pDireita = (*ppRaiz);
     (*ppRaiz) = pAuxiliar;
 }
+
+int balanceamentoAEsquerda(No **ppRaiz)
+{
+    int FB = fatorDeBalanceamento((*ppRaiz)->pEsquerda);
+
+    if (FB >= 0)
+    {
+        rotacaoSimplesDireita(ppRaiz);
+        printf("\nRotação simples à direita efetuada.\n");
+        
+        return 1;
+    }
+    else if (FB < 0)
+    {
+        rotacaoSimplesEsquerda(&((*ppRaiz)->pEsquerda));
+        rotacaoSimplesDireita(ppRaiz);
+        printf("\nRotação dupla à direita efetuada.\n");
+
+        return 1;
+    }
+
+    return 0;
+}
+
+int balanceamentoADireita(No **ppRaiz)
+{
+    int FB = fatorDeBalanceamento((*ppRaiz)->pDireita);
+
+    if (FB <= 0)
+    {
+        rotacaoSimplesEsquerda(ppRaiz);
+        printf("\nRotação simples à esquerda efetuada.\n");
+
+        return 1;
+    }
+    else if (FB > 0)
+    {
+        rotacaoSimplesDireita(&((*ppRaiz)->pDireita));
+        rotacaoSimplesEsquerda(ppRaiz);
+        printf("\nRotação dupla à esquerda efetuada.\n");
+
+        return 1;
+    }
+
+    return 0;
+}
