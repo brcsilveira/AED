@@ -44,5 +44,50 @@ int main()
 
 void Insere(No **ppRaiz, int valor)
 {
+    if (*ppRaiz == NULL)
+    {
+        *ppRaiz = (No *)malloc(sizeof(No));
+        (*ppRaiz).valor = valor;
+        (*ppRaiz).pEsquerda = NULL;
+        (*ppRaiz).pDireita = NULL;
+        
+        return 1;
+    }
+    else if ((*ppRaiz).valor > valor)
+    {
+        if (Insere(&(*ppRaiz).pEsquerda, valor))
+            {
+                if (balance(ppRaiz))
+                {
+                    return 0;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+    }
+    else
+    {
+        printf("\nValor já consta na árvore.\n");
+        return 0;
+    }
+}
 
+int Balanceamento(No **ppRaiz)
+{
+    int fb = fatorDeBalanceamento(*ppRaiz);
+
+    if (fb > 1)
+    {
+        return balanceamentoAEsquerda(ppRaiz);
+    }
+    else if (fb < -1)
+    {
+        return balanceamentoADireita(ppRaiz);
+    }
+    else
+    {
+        return 0;
+    }
 }
