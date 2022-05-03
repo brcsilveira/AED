@@ -18,6 +18,8 @@ void rotacaoSimplesDireita(No **ppRaiz);
 int balanceamentoAEsquerda(No **ppRaiz);
 int balanceamentoADireita(No **ppRaiz);
 int ehArvoreAvl(No *ppRaiz);
+void limpaArvore(No *ppRaiz);
+void printArvore(No *ppRaiz);
 
 int main()
 {
@@ -46,6 +48,8 @@ int main()
     {
         printf("\n\nNão é uma árvore AVL.\n\n");
     }
+
+    limpaArvore(ppRaiz);
 
     return 0;
 }
