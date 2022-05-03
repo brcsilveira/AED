@@ -15,6 +15,8 @@ int fatorDeBalanceamento(No *pRaiz);
 int altura(No *pRaiz);
 void rotacaoSimplesEsquerda(No **ppRaiz);
 void rotacaoSimplesDireita(No **ppRaiz);
+int balanceamentoAEsquerda(No **ppRaiz);
+int balanceamentoADireita(No **ppRaiz);
 
 int main()
 {
