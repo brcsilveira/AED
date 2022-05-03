@@ -17,6 +17,7 @@ void rotacaoSimplesEsquerda(No **ppRaiz);
 void rotacaoSimplesDireita(No **ppRaiz);
 int balanceamentoAEsquerda(No **ppRaiz);
 int balanceamentoADireita(No **ppRaiz);
+int ehArvoreAvl(No *ppRaiz);
 
 int main()
 {
@@ -195,4 +196,28 @@ int balanceamentoADireita(No **ppRaiz)
     }
 
     return 0;
+}
+
+int ehArvoreAvl(No *ppRaiz)
+{
+    int FB;
+    FB = fatorDeBalanceamento(ppRaiz);
+
+    if (ppRaiz == NULL)
+    return 1;
+
+    if (!ehArvoreAvl(ppRaiz->pEsquerda))
+    return 0;
+
+    if (!ehArvoreAvl(ppRaiz->pDireita))
+    return 0;
+
+    if ((FB > 1) || (FB < -1))
+    {
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
 }
