@@ -221,3 +221,14 @@ int ehArvoreAvl(No *ppRaiz)
         return 1;
     }
 }
+
+void limpaArvore(No *ppRaiz)
+{
+    if (ppRaiz == NULL)
+    return;
+
+    limpaArvore(ppRaiz->pEsquerda);
+    limpaArvore(ppRaiz->pDireita);
+
+    free(ppRaiz);
+}
