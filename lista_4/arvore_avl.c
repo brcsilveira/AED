@@ -13,6 +13,8 @@ int insere(No **ppRaiz, int valor);
 int balanceamento(No **ppRaiz);
 int fatorDeBalanceamento(No *pRaiz);
 int altura(No *pRaiz);
+void rotacaoSimplesEsquerda(No **ppRaiz);
+void rotacaoSimplesDireita(No **ppRaiz);
 
 int main()
 {
@@ -125,4 +127,24 @@ int altura(No *pRaiz)
     {
         return direita + 1;
     }
+}
+
+void rotacaoSimplesEsquerda(No **ppRaiz)
+{
+    No *pAuxiliar;
+
+    pAuxiliar = (*ppRaiz)->pDireita;
+    (*ppRaiz)->pDireita = pAuxiliar->pEsquerda;
+    pAuxiliar->pEsquerda = (*ppRaiz);
+    (*ppRaiz) = pAuxiliar;
+}
+
+void rotacaoSimplesDireita(No **ppRaiz)
+{
+    No *pAuxiliar;
+
+    pAuxiliar = (*ppRaiz)->pEsquerda;
+    (*ppRaiz)->pEsquerda = pAuxiliar->pDireita;
+    pAuxiliar->pDireita = (*ppRaiz);
+    (*ppRaiz) = pAuxiliar;
 }
