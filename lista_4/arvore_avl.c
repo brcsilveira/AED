@@ -237,6 +237,55 @@ void limpaArvore(No *ppRaiz)
     free(ppRaiz);
 }
 
+/*Para o segundo cenário. De acordo com o conteúdo da pagina:
+https://stackoverflow.com/questions/3955680/how-to-check-if-my-avl-tree-implementation-is-correct*/
+
+void segundoCenario()
+{
+    printf("\nCaso 1A:\n");
+    primeiroCasoA();
+}
+
+void primeiroCasoA()
+{
+    No *ppRaiz = NULL;
+    int valor;
+
+    valor = 20;
+    insere(&ppRaiz, valor);
+    valor = 4;
+    insere(&ppRaiz, valor);
+    
+    printArvore(ppRaiz);
+    
+    if (ehArvoreAvl(ppRaiz))
+    {
+        printf("\nÉ uma árvore AVL.\n");
+    }
+    else
+    {
+        printf("\nNão é uma árvore AVL.\n");
+    }
+
+    printf("\n\n");
+
+    valor = 15;
+    insere(&ppRaiz, valor);
+
+    printArvore(ppRaiz);
+
+    if (ehArvoreAvl(ppRaiz))
+    {
+        printf("\nÉ uma árvore AVL.\n");
+    }
+    else
+    {
+        printf("\nNão é uma árvore AVL.\n");
+    }
+
+    limpaArvore(ppRaiz);
+}
+
 void printArvore(No *ppRaiz)
 {
     if (ppRaiz != NULL)
