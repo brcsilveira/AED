@@ -244,6 +244,16 @@ void segundoCenario()
 {
     printf("\nCaso 1A:\n");
     primeiroCasoA();
+    printf("\n\t--CASO 2A--\n");
+    segundoCasoA();
+    printf("\n\t--CASO 3A--\n");
+    terceiroCasoA();
+    printf("\n\t--CASO 1B--\n");
+    primeiroCasoB();
+    printf("\n\t--CASO 2B--\n");
+    segundoCasoB();
+    printf("\n\t--CASO 3B--\n");
+    terceiroCasoB();
 }
 
 void primeiroCasoA()
@@ -284,6 +294,250 @@ void primeiroCasoA()
     }
 
     limpaArvore(ppRaiz);
+}
+
+void segundoCasoA() 
+{
+  No *ppRaiz = NULL;
+  int valor;
+
+  valor = 20;  
+  insere(&ppRaiz, valor);
+  valor = 4;
+  insere(&ppRaiz, valor);
+  valor = 26;
+  insere(&ppRaiz, valor);
+  valor = 3;
+  insere(&ppRaiz, valor);
+  valor = 9;
+  insert(&ppRaiz, valor);
+
+  printArvore(ppRaiz);
+  
+  if (ehArvoreAvl(ppRaiz)) 
+  {
+    printf("\nÉ uma Árvore AVL.\n");
+  } 
+  else 
+  {
+    printf("\nNão é uma Árvore AVL.\n");
+  }
+  
+  printf("\n\n");
+  
+  valor = 15;
+  insere(&ppRaiz, valor);
+  
+  printArvore(ppRaiz);
+  
+  if (ehArvoreAvl(ppRaiz)) 
+  {
+    printf("\nÉ uma Árvore AVL.\n");
+  } 
+  else 
+  {
+    printf("\nNão é uma Árvore AVL.\n");
+  }
+
+  limpaArvore(ppRaiz);
+}
+
+void terceiroCasoA() 
+{
+  No *ppRaiz = NULL;
+  int valor;
+
+  valor = 20;
+  insere(&ppRaiz, valor);
+  valor = 4;
+  insere(&ppRaiz, valor);
+  valor = 26;
+  insere(&ppRaiz, valor);
+  valor = 3;
+  insere(&ppRaiz, valor);
+  valor = 9;
+  insere(&ppRaiz, valor);
+  valor = 2;
+  insere(&ppRaiz, valor);
+  valor = 7;
+  insere(&ppRaiz, valor);
+  valor = 11;
+  insere(&ppRaiz, valor);
+  valor = 21;
+  insere(&ppRaiz, valor);
+  valor = 30;
+  insere(&ppRaiz, valor);
+  
+  printArvore(ppRaiz);
+  
+  if (ehArvoreAvl(ppRaiz)) 
+  {
+    printf("\nÉ uma Árvore AVL.\n");
+  } 
+  else 
+  {
+    printf("\nNão é uma Árvore AVL.\n");
+  }
+  
+  printf("\n\n");
+  
+  valor = 15;
+  insere(&ppRaiz, valor);
+  
+  printArvore(ppRaiz);
+  
+  if (ehArvoreAvl(ppRaiz)) 
+  {
+    printf("\nÉ uma Árvore AVL.\n");
+  } 
+  else 
+  {
+    printf("\nNão é uma Árvore AVL.\n");
+  }
+  
+  limpaArvore(ppRaiz);
+}
+
+void primeiroCasoB() 
+{
+  No *ppRaiz = NULL;
+  int valor;
+
+  valor = 20;
+  insere(&ppRaiz, valor);
+  valor = 4;
+  insere(&ppRaiz, valor);
+  
+  printArvore(ppRaiz);
+  
+  if (ehArvoreAvl(ppRaiz)) 
+  {
+    printf("\nÉ uma Árvore AVL.\n");
+  } 
+  else 
+  {
+    printf("\nNão é uma Árvore AVL.\n");
+  }
+  
+  printf("\n\n");
+  
+  valor = 8;
+  insere(&ppRaiz, valor);
+  
+  printArvore(ppRaiz);
+  
+  if (ehArvoreAvl(ppRaiz)) 
+  {
+    printf("\nÉ uma Árvore AVL.\n");
+  } 
+  else 
+  {
+    printf("\nNão é uma Árvore AVL.\n");
+  }
+  
+  limpaArvore(ppRaiz);
+}
+
+void segundoCasoB() 
+{
+  No *ppRaiz = NULL;
+  int valor;
+ 
+  valor = 20;
+  insere(&ppRaiz, valor);
+  valor = 4;
+  insere(&ppRaiz, valor);
+  valor = 26;
+  insere(&ppRaiz, valor);
+  valor = 3;
+  insere(&ppRaiz, valor);
+  valor = 9;
+  insere(&ppRaiz, valor);
+ 
+  printArvore(ppRaiz);
+ 
+  if (ehArvoreAvl(ppRaiz)) 
+  {
+    printf("\nÉ uma Árvore AVL.\n");
+  } 
+  else 
+  {
+    printf("\nNão é uma Árvore AVL.\n");
+  }
+  
+  printf("\n\n");
+  
+  valor = 8;
+  insere(&ppRaiz, valor);
+  
+  printArvore(ppRaiz);
+  
+  if (ehArvoreAvl(ppRaiz)) 
+  {
+    printf("\nÉ uma Árvore AVL.\n");
+  } 
+  else 
+  {
+    printf("\nNão é uma Árvore AVL.\n");
+  }
+
+  limpaArvore(ppRaiz);
+}
+
+void terceiroCasoB() 
+{
+  No *ppRaiz = NULL;
+  int valor;
+
+  valor = 20;
+  insere(&ppRaiz, valor);
+  valor = 4;
+  insere(&ppRaiz, valor);
+  valor = 26;
+  insere(&ppRaiz, valor);
+  valor = 3;
+  insere(&ppRaiz, valor);
+  valor = 9;
+  insere(&ppRaiz, valor);
+  valor = 2;
+  insere(&ppRaiz, valor);
+  valor = 7;
+  insere(&ppRaiz, valor);
+  valor = 11;
+  insere(&ppRaiz, valor);
+  valor = 21;
+  insere(&ppRaiz, valor);
+  valor = 30;
+  insere(&ppRaiz, valor);
+ 
+  printArvore(ppRaiz);
+ 
+  if (ehArvoreAvl(ppRaiz)) 
+  {
+    printf("\nÉ uma Árvore AVL.\n");
+  } 
+  else 
+  {
+    printf("\nNão é uma Árvore AVL.\n");
+  }
+  
+  printf("\n\n");
+  
+  valor = 8;
+  insere(&ppRaiz, valor);
+  
+  printArvore(ppRaiz);
+  
+  if (ehArvoreAvl(ppRaiz)) 
+  {
+    printf("\nÉ uma Árvore AVL.\n");
+  } 
+  else 
+  {
+    printf("\nNão é uma Árvore AVL.\n");
+  }
+  
+  limpaArvore(ppRaiz);
 }
 
 void printArvore(No *ppRaiz)
