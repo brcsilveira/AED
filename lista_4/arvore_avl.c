@@ -51,6 +51,8 @@ int main()
 
   limpaArvore(ppRaiz);
 
+  segundoCenario();
+
   return 0;
 }
 
