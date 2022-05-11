@@ -23,218 +23,232 @@ void printArvore(No *ppRaiz);
 
 int main()
 {
-    int quantidadeDeNos, cont, valor;
-    cont = 0;
-    No *ppRaiz = NULL;
+  int quantidadeDeNos, cont, valor;
+  cont = 0;
+  No *ppRaiz = NULL;
 
-    printf("Informe a quantidade de nós que deseja inserir: ");
-    scanf("%d", &quantidadeDeNos);
+  printf("Informe a quantidade de nós que deseja inserir: ");
+  scanf("%d", &quantidadeDeNos);
 
-    srand(time(0));
+  srand(time(0));
 
-    while (cont < quantidadeDeNos)
-    {
-        valor = rand() % 100;
-        printf("\nValor sorteado: %d\n", valor);
-        insere(&ppRaiz, valor);
-        cont++;
-    }
+  while (cont < quantidadeDeNos)
+  {
+    valor = rand() % 100;
+    printf("\nValor sorteado: %d\n", valor);
+    insere(&ppRaiz, valor);
+    cont++;
+  }
 
-    if (ehArvoreAvl(ppRaiz))
-    {
-        printf("\n\nÉ uma árvore AVL.\n\n");
-    }
-    else
-    {
-        printf("\n\nNão é uma árvore AVL.\n\n");
-    }
+  if (ehArvoreAvl(ppRaiz))
+  {
+    printf("\n\nÉ uma árvore AVL.\n\n");
+  }
+  else
+  {
+    printf("\n\nNão é uma árvore AVL.\n\n");
+  }
 
-    limpaArvore(ppRaiz);
+  limpaArvore(ppRaiz);
 
-    return 0;
+  return 0;
 }
 
 int insere(No **ppRaiz, int valor)
 {
-    if (*ppRaiz == NULL)
+  if (*ppRaiz == NULL)
+  {
+    *ppRaiz = (No *)malloc(sizeof(No));
+    (*ppRaiz)->valor = valor;
+    (*ppRaiz)->pEsquerda = NULL;
+    (*ppRaiz)->pDireita = NULL;
+
+    return 1;  //Para saber que a inserção foi bem sucedida.
+  }
+  else if ((*ppRaiz)->valor > valor)
+  {
+    if (insere(&(*ppRaiz)->pEsquerda, valor))
     {
-        *ppRaiz = (No *)malloc(sizeof(No));
-        (*ppRaiz)->valor = valor;
-        (*ppRaiz)->pEsquerda = NULL;
-        (*ppRaiz)->pDireita = NULL;
-        
-        return 1;
+      if (balanceamento(ppRaiz))
+      {
+        return 0; //Significa que houve o balanceamento
+      }
+      else
+      {
+        return 1; //Significa que não houve o balanceamento
+      }
     }
-    else if ((*ppRaiz)->valor > valor)
+  }
+  else if ((*ppRaiz)->valor < valor) 
+  {
+    if (insert(&(*ppRaiz)->pDireita, valor)) 
     {
-        if (insere(&(*ppRaiz)->pEsquerda, valor))//pq da erro com o "."
-            {
-                if (balanceamento(ppRaiz))
-                {
-                    return 0;
-                }
-                else
-                {
-                    return 1;
-                }
-            }
+      if (balance(ppRaiz)) 
+      {
+        return 0; //Significa que houve o balanceamento
+      } 
+      else 
+      {
+        return 1; //Significa que não houve o balanceamento
+      }
     }
-    else
-    {
-        printf("\nValor já consta na árvore.\n");
-        return 0;
-    }
+  }
+  else
+  {
+    printf("\nEste valor já está presente na árvore.\n");
+    return 0;
+  }
 }
 
 int balanceamento(No **ppRaiz)
 {
-    int fb = fatorDeBalanceamento(*ppRaiz);
+  int fb = fatorDeBalanceamento(*ppRaiz);
 
-    if (fb > 1)
-    {
-        return balanceamentoAEsquerda(ppRaiz);
-    }
-    else if (fb < -1)
-    {
-        return balanceamentoADireita(ppRaiz);
-    }
-    else
-    {
-        return 0;
-    }
+  if (fb > 1)
+  {
+    return balanceamentoAEsquerda(ppRaiz);
+  }
+  else if (fb < -1)
+  {
+    return balanceamentoADireita(ppRaiz);
+  }
+  else
+  {
+    return 0;
+  }
 }
 
 int fatorDeBalanceamento(No *pRaiz)
 {
-    if (pRaiz == NULL)
-    {
-        return 0; 
-    }
+  if (pRaiz == NULL)
+  {
+    return 0;//caso nenhum valor tenha sido inserido na árvore. 
+  }
 
-    return altura(pRaiz->pEsquerda) - altura(pRaiz->pDireita);
+  return altura(pRaiz->pEsquerda) - altura(pRaiz->pDireita);
 }
 
 int altura(No *pRaiz)
 {
-    int direita, esquerda;
+  int direita, esquerda;
 
-    if (pRaiz == NULL)
-    {
-        return 0;
-    }
+  if (pRaiz == NULL)
+  {
+    return 0;//Não tem elemento, então altura = 0.
+  }
 
-    esquerda = altura(pRaiz->pEsquerda);
-    direita = altura(pRaiz->pDireita);
+  esquerda = altura(pRaiz->pEsquerda);//Linha 140 e 141 serão usadas para calcular a
+  direita = altura(pRaiz->pDireita);//altura do seu próprio nó.
 
-    if (esquerda > direita)
-    {
-        return esquerda + 1;
-    }
-    else
-    {
-        return direita + 1;
-    }
+  if (esquerda > direita)
+  {
+    return esquerda + 1;
+  }
+  else
+  {
+    return direita + 1;
+  }
 }
 
 void rotacaoSimplesEsquerda(No **ppRaiz)
 {
-    No *pAuxiliar;
+  No *pAuxiliar;
 
-    pAuxiliar = (*ppRaiz)->pDireita;
-    (*ppRaiz)->pDireita = pAuxiliar->pEsquerda;
-    pAuxiliar->pEsquerda = (*ppRaiz);
-    (*ppRaiz) = pAuxiliar;
+  pAuxiliar = (*ppRaiz)->pDireita;
+  (*ppRaiz)->pDireita = pAuxiliar->pEsquerda;
+  pAuxiliar->pEsquerda = (*ppRaiz);
+  (*ppRaiz) = pAuxiliar;
 }
 
 void rotacaoSimplesDireita(No **ppRaiz)
 {
-    No *pAuxiliar;
+  No *pAuxiliar;
 
-    pAuxiliar = (*ppRaiz)->pEsquerda;
-    (*ppRaiz)->pEsquerda = pAuxiliar->pDireita;
-    pAuxiliar->pDireita = (*ppRaiz);
-    (*ppRaiz) = pAuxiliar;
+  pAuxiliar = (*ppRaiz)->pEsquerda;
+  (*ppRaiz)->pEsquerda = pAuxiliar->pDireita;
+  pAuxiliar->pDireita = (*ppRaiz);
+  (*ppRaiz) = pAuxiliar;
 }
 
 int balanceamentoAEsquerda(No **ppRaiz)
 {
-    int FB = fatorDeBalanceamento((*ppRaiz)->pEsquerda);
+  int FB = fatorDeBalanceamento((*ppRaiz)->pEsquerda);
 
-    if (FB >= 0)
-    {
-        rotacaoSimplesDireita(ppRaiz);
-        printf("\nRotação simples à direita efetuada.\n");
+  if (FB >= 0)
+  {
+    rotacaoSimplesDireita(ppRaiz);
+    printf("\nRotação simples à direita efetuada.\n");
         
-        return 1;
-    }
-    else if (FB < 0)
-    {
-        rotacaoSimplesEsquerda(&((*ppRaiz)->pEsquerda));
-        rotacaoSimplesDireita(ppRaiz);
-        printf("\nRotação dupla à direita efetuada.\n");
+    return 1;
+  }
+  else if (FB < 0)
+  {
+    rotacaoSimplesEsquerda(&((*ppRaiz)->pEsquerda));
+    rotacaoSimplesDireita(ppRaiz);
+    printf("\nRotação dupla à direita efetuada.\n");
 
-        return 1;
-    }
+    return 1;
+  }
 
-    return 0;
+  return 0;
 }
 
 int balanceamentoADireita(No **ppRaiz)
 {
-    int FB = fatorDeBalanceamento((*ppRaiz)->pDireita);
+  int FB = fatorDeBalanceamento((*ppRaiz)->pDireita);
 
-    if (FB <= 0)
-    {
-        rotacaoSimplesEsquerda(ppRaiz);
-        printf("\nRotação simples à esquerda efetuada.\n");
+  if (FB <= 0)
+  {
+    rotacaoSimplesEsquerda(ppRaiz);
+    printf("\nRotação simples à esquerda efetuada.\n");
 
-        return 1;
-    }
-    else if (FB > 0)
-    {
-        rotacaoSimplesDireita(&((*ppRaiz)->pDireita));
-        rotacaoSimplesEsquerda(ppRaiz);
-        printf("\nRotação dupla à esquerda efetuada.\n");
+    return 1;
+  }
+  else if (FB > 0)
+  {
+    rotacaoSimplesDireita(&((*ppRaiz)->pDireita));
+    rotacaoSimplesEsquerda(ppRaiz);
+    printf("\nRotação dupla à esquerda efetuada.\n");
 
-        return 1;
-    }
+    return 1;
+  }
 
-    return 0;
+  return 0;
 }
 
 int ehArvoreAvl(No *ppRaiz)
 {
-    int FB;
-    FB = fatorDeBalanceamento(ppRaiz);
+  int FB;
+  FB = fatorDeBalanceamento(ppRaiz);
 
-    if (ppRaiz == NULL)
+  if (ppRaiz == NULL)
+  return 1;
+
+  if (!ehArvoreAvl(ppRaiz->pEsquerda))
+  return 0;
+
+  if (!ehArvoreAvl(ppRaiz->pDireita))
+  return 0;
+
+  if ((FB > 1) || (FB < -1))
+  {
+    return 0;
+  }
+  else
+  {
     return 1;
-
-    if (!ehArvoreAvl(ppRaiz->pEsquerda))
-    return 0;
-
-    if (!ehArvoreAvl(ppRaiz->pDireita))
-    return 0;
-
-    if ((FB > 1) || (FB < -1))
-    {
-        return 0;
-    }
-    else
-    {
-        return 1;
-    }
+  }
 }
 
 void limpaArvore(No *ppRaiz)
 {
-    if (ppRaiz == NULL)
-    return;
+  if (ppRaiz == NULL)
+  return;
 
-    limpaArvore(ppRaiz->pEsquerda);
-    limpaArvore(ppRaiz->pDireita);
+  limpaArvore(ppRaiz->pEsquerda);
+  limpaArvore(ppRaiz->pDireita);
 
-    free(ppRaiz);
+  free(ppRaiz);
 }
 
 /*Para o segundo cenário. De acordo com o conteúdo da pagina:
@@ -244,15 +258,15 @@ void segundoCenario()
 {
     printf("\nCaso 1A:\n");
     primeiroCasoA();
-    printf("\n\t--CASO 2A--\n");
+    printf("\nCaso 2A:\n");
     segundoCasoA();
-    printf("\n\t--CASO 3A--\n");
+    printf("\nCaso 3A:\n");
     terceiroCasoA();
-    printf("\n\t--CASO 1B--\n");
+    printf("\nCaso 1B:\n");
     primeiroCasoB();
-    printf("\n\t--CASO 2B--\n");
+    printf("\nCaso 2B:\n");
     segundoCasoB();
-    printf("\n\t--CASO 3B--\n");
+    printf("\nCaso 3B:\n");
     terceiroCasoB();
 }
 
@@ -269,13 +283,13 @@ void primeiroCasoA()
     printArvore(ppRaiz);
     
     if (ehArvoreAvl(ppRaiz))
-    {
-        printf("\nÉ uma árvore AVL.\n");
-    }
-    else
-    {
-        printf("\nNão é uma árvore AVL.\n");
-    }
+  {
+    printf("\n\nÉ uma árvore AVL.\n\n");
+  }
+  else
+  {
+    printf("\n\nNão é uma árvore AVL.\n\n");
+  }
 
     printf("\n\n");
 
@@ -285,13 +299,13 @@ void primeiroCasoA()
     printArvore(ppRaiz);
 
     if (ehArvoreAvl(ppRaiz))
-    {
-        printf("\nÉ uma árvore AVL.\n");
-    }
-    else
-    {
-        printf("\nNão é uma árvore AVL.\n");
-    }
+  {
+    printf("\n\nÉ uma árvore AVL.\n\n");
+  }
+  else
+  {
+    printf("\n\nNão é uma árvore AVL.\n\n");
+  }
 
     limpaArvore(ppRaiz);
 }
@@ -314,13 +328,13 @@ void segundoCasoA()
 
   printArvore(ppRaiz);
   
-  if (ehArvoreAvl(ppRaiz)) 
+  if (ehArvoreAvl(ppRaiz))
   {
-    printf("\nÉ uma Árvore AVL.\n");
-  } 
-  else 
+    printf("\n\nÉ uma árvore AVL.\n\n");
+  }
+  else
   {
-    printf("\nNão é uma Árvore AVL.\n");
+    printf("\n\nNão é uma árvore AVL.\n\n");
   }
   
   printf("\n\n");
@@ -330,13 +344,13 @@ void segundoCasoA()
   
   printArvore(ppRaiz);
   
-  if (ehArvoreAvl(ppRaiz)) 
+  if (ehArvoreAvl(ppRaiz))
   {
-    printf("\nÉ uma Árvore AVL.\n");
-  } 
-  else 
+    printf("\n\nÉ uma árvore AVL.\n\n");
+  }
+  else
   {
-    printf("\nNão é uma Árvore AVL.\n");
+    printf("\n\nNão é uma árvore AVL.\n\n");
   }
 
   limpaArvore(ppRaiz);
@@ -370,13 +384,13 @@ void terceiroCasoA()
   
   printArvore(ppRaiz);
   
-  if (ehArvoreAvl(ppRaiz)) 
+  if (ehArvoreAvl(ppRaiz))
   {
-    printf("\nÉ uma Árvore AVL.\n");
-  } 
-  else 
+    printf("\n\nÉ uma árvore AVL.\n\n");
+  }
+  else
   {
-    printf("\nNão é uma Árvore AVL.\n");
+    printf("\n\nNão é uma árvore AVL.\n\n");
   }
   
   printf("\n\n");
@@ -386,13 +400,13 @@ void terceiroCasoA()
   
   printArvore(ppRaiz);
   
-  if (ehArvoreAvl(ppRaiz)) 
+  if (ehArvoreAvl(ppRaiz))
   {
-    printf("\nÉ uma Árvore AVL.\n");
-  } 
-  else 
+    printf("\n\nÉ uma árvore AVL.\n\n");
+  }
+  else
   {
-    printf("\nNão é uma Árvore AVL.\n");
+    printf("\n\nNão é uma árvore AVL.\n\n");
   }
   
   limpaArvore(ppRaiz);
@@ -410,13 +424,13 @@ void primeiroCasoB()
   
   printArvore(ppRaiz);
   
-  if (ehArvoreAvl(ppRaiz)) 
+  if (ehArvoreAvl(ppRaiz))
   {
-    printf("\nÉ uma Árvore AVL.\n");
-  } 
-  else 
+    printf("\n\nÉ uma árvore AVL.\n\n");
+  }
+  else
   {
-    printf("\nNão é uma Árvore AVL.\n");
+    printf("\n\nNão é uma árvore AVL.\n\n");
   }
   
   printf("\n\n");
@@ -426,13 +440,13 @@ void primeiroCasoB()
   
   printArvore(ppRaiz);
   
-  if (ehArvoreAvl(ppRaiz)) 
+  if (ehArvoreAvl(ppRaiz))
   {
-    printf("\nÉ uma Árvore AVL.\n");
-  } 
-  else 
+    printf("\n\nÉ uma árvore AVL.\n\n");
+  }
+  else
   {
-    printf("\nNão é uma Árvore AVL.\n");
+    printf("\n\nNão é uma árvore AVL.\n\n");
   }
   
   limpaArvore(ppRaiz);
@@ -456,13 +470,13 @@ void segundoCasoB()
  
   printArvore(ppRaiz);
  
-  if (ehArvoreAvl(ppRaiz)) 
+  if (ehArvoreAvl(ppRaiz))
   {
-    printf("\nÉ uma Árvore AVL.\n");
-  } 
-  else 
+    printf("\n\nÉ uma árvore AVL.\n\n");
+  }
+  else
   {
-    printf("\nNão é uma Árvore AVL.\n");
+    printf("\n\nNão é uma árvore AVL.\n\n");
   }
   
   printf("\n\n");
@@ -472,13 +486,13 @@ void segundoCasoB()
   
   printArvore(ppRaiz);
   
-  if (ehArvoreAvl(ppRaiz)) 
+  if (ehArvoreAvl(ppRaiz))
   {
-    printf("\nÉ uma Árvore AVL.\n");
-  } 
-  else 
+    printf("\n\nÉ uma árvore AVL.\n\n");
+  }
+  else
   {
-    printf("\nNão é uma Árvore AVL.\n");
+    printf("\n\nNão é uma árvore AVL.\n\n");
   }
 
   limpaArvore(ppRaiz);
@@ -512,13 +526,13 @@ void terceiroCasoB()
  
   printArvore(ppRaiz);
  
-  if (ehArvoreAvl(ppRaiz)) 
+  if (ehArvoreAvl(ppRaiz))
   {
-    printf("\nÉ uma Árvore AVL.\n");
-  } 
-  else 
+    printf("\n\nÉ uma árvore AVL.\n\n");
+  }
+  else
   {
-    printf("\nNão é uma Árvore AVL.\n");
+    printf("\n\nNão é uma árvore AVL.\n\n");
   }
   
   printf("\n\n");
@@ -528,13 +542,13 @@ void terceiroCasoB()
   
   printArvore(ppRaiz);
   
-  if (ehArvoreAvl(ppRaiz)) 
+  if (ehArvoreAvl(ppRaiz))
   {
-    printf("\nÉ uma Árvore AVL.\n");
-  } 
-  else 
+    printf("\n\nÉ uma árvore AVL.\n\n");
+  }
+  else
   {
-    printf("\nNão é uma Árvore AVL.\n");
+    printf("\n\nNão é uma árvore AVL.\n\n");
   }
   
   limpaArvore(ppRaiz);
@@ -542,11 +556,11 @@ void terceiroCasoB()
 
 void printArvore(No *ppRaiz)
 {
-    if (ppRaiz != NULL)
-    {
-        printf("%d(", ppRaiz->valor);
-        printArvore(ppRaiz->pEsquerda);
-        printArvore(ppRaiz->pDireita);
-        printf(")");
-    }
+  if (ppRaiz != NULL)
+  {
+    printf("%d(", ppRaiz->valor);
+    printArvore(ppRaiz->pEsquerda);
+    printArvore(ppRaiz->pDireita);
+    printf(")");
+  }
 }
