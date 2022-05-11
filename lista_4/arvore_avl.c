@@ -258,17 +258,17 @@ https://stackoverflow.com/questions/3955680/how-to-check-if-my-avl-tree-implemen
 
 void segundoCenario()
 {
-    printf("\nCaso 1A:\n");
+    printf("\nCaso 1A:\n\n");
     primeiroCasoA();
-    printf("\nCaso 2A:\n");
+    printf("\nCaso 2A:\n\n");
     segundoCasoA();
-    printf("\nCaso 3A:\n");
+    printf("\nCaso 3A:\n\n");
     terceiroCasoA();
-    printf("\nCaso 1B:\n");
+    printf("\nCaso 1B:\n\n");
     primeiroCasoB();
-    printf("\nCaso 2B:\n");
+    printf("\nCaso 2B:\n\n");
     segundoCasoB();
-    printf("\nCaso 3B:\n");
+    printf("\nCaso 3B:\n\n");
     terceiroCasoB();
 }
 
