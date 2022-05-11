@@ -27,7 +27,7 @@ int main()
   cont = 0;
   No *ppRaiz = NULL;
 
-  printf("Informe a quantidade de nós que deseja inserir: ");
+  printf("\nInforme a quantidade de nós que deseja inserir: ");
   scanf("%d", &quantidadeDeNos);
 
   srand(time(0));
