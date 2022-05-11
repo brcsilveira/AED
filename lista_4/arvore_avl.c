@@ -81,9 +81,9 @@ int insere(No **ppRaiz, int valor)
   }
   else if ((*ppRaiz)->valor < valor) 
   {
-    if (insert(&(*ppRaiz)->pDireita, valor)) 
+    if (insere(&(*ppRaiz)->pDireita, valor)) 
     {
-      if (balance(ppRaiz)) 
+      if (balanceamento(ppRaiz)) 
       {
         return 0; //Significa que houve o balanceamento
       } 
@@ -324,7 +324,7 @@ void segundoCasoA()
   valor = 3;
   insere(&ppRaiz, valor);
   valor = 9;
-  insert(&ppRaiz, valor);
+  insere(&ppRaiz, valor);
 
   printArvore(ppRaiz);
   
