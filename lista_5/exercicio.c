@@ -35,16 +35,16 @@ void preencheVetor(int vetorDeDados[], int dadosTotal)
     printf("\n");
 }
 
-// void printVetor(int vetorDeDados[], int dadosTotal)
-// {
-//     for (int i = 0; i < dadosTotal; i++)
-//     {   
-//         if (i < (dadosTotal - 1))
-//             printf("[%d] - ", vetorDeDados[i]);
-//         else
-//             printf("[%d]\n\n", vetorDeDados[i]);
-//     }
-// }
+void printVetor(int vetorDeDados[], int dadosTotal)
+{
+    for (int i = 0; i < dadosTotal; i++)
+    {   
+        if (i < (dadosTotal - 1))
+            printf("[%d] - ", vetorDeDados[i]);
+        else
+            printf("[%d]\n\n", vetorDeDados[i]);
+    }
+}
 
 // int menu(void)
 // {
