@@ -46,22 +46,22 @@ void printVetor(int vetorDeDados[], int dadosTotal)
     }
 }
 
-// int menu(void)
-// {
-//     int escolha = 0;
+int menu(void)
+{
+    int escolha = 0;
 
-//     do {
-//         printf("1 - Insertion Sort\n");
-//         printf("2 - Selection Sort\n");
-//         printf("3 - Quick Sort\n");
-//         printf("4 - Merge Sort\n");
-//         printf("\nInforme a sua escolha: ");
-//         scanf("%d", &escolha);
+    do {
+        printf("1 - Insertion Sort\n");
+        printf("2 - Selection Sort\n");
+        printf("3 - Quick Sort\n");
+        printf("4 - Merge Sort\n");
+        printf("\nInforme a sua escolha: ");
+        scanf("%d", &escolha);
 
-//         if (escolha < 1 || escolha > 4)
-//             printf("\nEscolha inválida. Escolha um algoritmo: \n\n");
+        if (escolha < 1 || escolha > 4)
+            printf("\nEscolha inválida. Escolha um algoritmo: \n\n");
 
-//     } while (escolha < 1 || escolha > 4);
+    } while (escolha < 1 || escolha > 4);
 
-//     return escolha;
-// }
+    return escolha;
+}
