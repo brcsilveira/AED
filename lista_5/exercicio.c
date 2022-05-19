@@ -6,6 +6,7 @@ void preencheVetor(int vetorDeDados[], int dadosTotal);
 void printVetor(int vetorDeDados[], int dadosTotal);
 int menu(void);
 void algoritmos(int escolha, int vetorDeDados[], int dadosTotal);
+void insertionSort(int vetorDeDados[], int dadosTotal);
 
 int main()
 {
@@ -75,6 +76,7 @@ void algoritmos(int escolha, int vetorDeDados[], int dadosTotal)
     {
         case 1:
             printf("\nEscolha: Insertion Sort\n");
+            insertionSort(vetorDeDados, dadosTotal);
         break;
         case 2:
             printf("\nEscolha: Selection Sort\n");
@@ -85,5 +87,28 @@ void algoritmos(int escolha, int vetorDeDados[], int dadosTotal)
         case 4:
             printf("\nEscolha: Merge Sort\n");
         break;
+    }
+}
+
+void insertionSort(int vetorDeDados[], int dadosTotal)
+{
+    int j, aux;
+
+    for (int i = 1; i < dadosTotal; i++)
+    {
+        printf("\n[%d] ", i);
+
+        aux = vetorDeDados[i];
+        j = i - 1;
+
+        while (j >= 0 && aux < vetorDeDados[j])
+        {
+            printf("%d, ", j);
+
+            vetorDeDados[j + 1] = vetorDeDados[j];
+            j--;
+        }
+
+        vetorDeDados[j + 1] = aux;
     }
 }
