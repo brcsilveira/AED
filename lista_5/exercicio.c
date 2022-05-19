@@ -5,6 +5,7 @@
 void preencheVetor(int vetorDeDados[], int dadosTotal);
 void printVetor(int vetorDeDados[], int dadosTotal);
 int menu(void);
+void algoritmos(int escolha, int vetorDeDados[], int dadosTotal);
 
 int main()
 {
@@ -22,6 +23,8 @@ int main()
 
     printf("Escolha um algoritmo: \n\n");
     escolhaDoAlgoritmo = menu();
+
+    algoritmos(escolhaDoAlgoritmo, vetorDeDados, dadosTotal);
 
     return 0;
 }
@@ -64,4 +67,23 @@ int menu(void)
     } while (escolha < 1 || escolha > 4);
 
     return escolha;
+}
+
+void algoritmos(int escolha, int vetorDeDados[], int dadosTotal)
+{
+    switch (escolha)
+    {
+        case 1:
+            printf("\nEscolha: Insertion Sort\n");
+        break;
+        case 2:
+            printf("\nEscolha: Selection Sort\n");
+        break;
+        case 3:
+            printf("\nEscolha: Quick Sort\n");
+        break;
+        case 4:
+            printf("\nEscolha: Merge Sort\n");
+        break;
+    }
 }
