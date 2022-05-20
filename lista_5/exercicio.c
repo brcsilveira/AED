@@ -7,7 +7,8 @@ void printVetor(int vetorDeDados[], int dadosTotal);
 int menu(void);
 void algoritmos(int escolha, int vetorDeDados[], int dadosTotal);
 void insertionSort(int vetorDeDados[], int dadosTotal);
-void selectionSort(int vetorDeDados, int dadosTotal);
+void selectionSort(int vetorDeDados[], int dadosTotal);
+void quickSort(int vetorDeDados[], int esquerda, int direita);
 
 int main()
 {
@@ -85,6 +86,7 @@ void algoritmos(int escolha, int vetorDeDados[], int dadosTotal)
         break;
         case 3:
             printf("\nEscolha: Quick Sort\n");
+            quickSort(vetorDeDados, NULL, dadosTotal - 1);
         break;
         case 4:
             printf("\nEscolha: Merge Sort\n");
@@ -115,7 +117,7 @@ void insertionSort(int vetorDeDados[], int dadosTotal)
     }
 }
 
-void selectionSort(int vetorDeDados, int dadosTotal)
+void selectionSort(int vetorDeDados[], int dadosTotal)
 {
     int menorValor, aux, menorValorAux;
 
@@ -137,4 +139,38 @@ void selectionSort(int vetorDeDados, int dadosTotal)
         vetorDeDados[i] = vetorDeDados[menorValorAux];
         vetorDeDados[menorValorAux] = aux;
     } 
+}
+
+void quickSort(int vetorDeDados[], int esquerda, int direita)
+{
+    int pivo, aux, e = esquerda, d = direita;
+
+    pivo = vetorDeDados[(esquerda + direita) / 2];
+
+    do {
+
+        while (vetorDeDados[e] < pivo) //Busca o maior valor do vetor.
+        {
+            e++;
+        }
+        while (vetorDeDados[d] > pivo) //Busca o menor valor do vetor.
+        {
+            d--;
+        }
+
+        if (e <= d)
+        {
+            aux = vetorDeDados[e];
+            vetorDeDados[e] = vetorDeDados[d];
+            vetorDeDados[d] = aux;
+            e++;
+            d--;
+        }
+    } while (e <= d);
+
+    if (esquerda < d)
+        quickSort(vetorDeDados, esquerda, d);
+
+    if (direita > e)
+        quickSort(vetorDeDados, e, direita);
 }
