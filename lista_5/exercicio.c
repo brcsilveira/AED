@@ -7,6 +7,7 @@ void printVetor(int vetorDeDados[], int dadosTotal);
 int menu(void);
 void algoritmos(int escolha, int vetorDeDados[], int dadosTotal);
 void insertionSort(int vetorDeDados[], int dadosTotal);
+void selectionSort(int vetorDeDados, int dadosTotal);
 
 int main()
 {
@@ -80,6 +81,7 @@ void algoritmos(int escolha, int vetorDeDados[], int dadosTotal)
         break;
         case 2:
             printf("\nEscolha: Selection Sort\n");
+            selectionSort(vetorDeDados, dadosTotal);
         break;
         case 3:
             printf("\nEscolha: Quick Sort\n");
@@ -111,4 +113,28 @@ void insertionSort(int vetorDeDados[], int dadosTotal)
 
         vetorDeDados[j + 1] = aux;
     }
+}
+
+void selectionSort(int vetorDeDados, int dadosTotal)
+{
+    int menorValor, aux, menorValorAux;
+
+    for (int i = 0; i <= dadosTotal; i++)
+    {
+        menorValorAux = i;
+        menorValor = vetorDeDados[i];
+
+        for (int j = i + 1; j < dadosTotal; j++)
+        {
+            if (vetorDeDados[j] < menorValor)
+            {
+                menorValor = vetorDeDados[j];
+                menorValorAux = j;
+            }
+        }
+
+        aux = vetorDeDados[i];
+        vetorDeDados[i] = vetorDeDados[menorValorAux];
+        vetorDeDados[menorValorAux] = aux;
+    } 
 }
