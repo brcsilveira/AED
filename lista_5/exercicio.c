@@ -9,6 +9,8 @@ void algoritmos(int escolha, int vetorDeDados[], int dadosTotal);
 void insertionSort(int vetorDeDados[], int dadosTotal);
 void selectionSort(int vetorDeDados[], int dadosTotal);
 void quickSort(int vetorDeDados[], int esquerda, int direita);
+void mergeSort(int vetorDeDados[], int tamanho, int esquerda, int direita);
+void merge(int vetorDeDados[], int tamanho, int esquerda, int meio, int direita);
 
 int main()
 {
@@ -173,4 +175,66 @@ void quickSort(int vetorDeDados[], int esquerda, int direita)
 
     if (direita > e)
         quickSort(vetorDeDados, e, direita);
+}
+
+void mergeSort(int vetorDeDados[], int tamanho, int esquerda, int direita)
+{
+    if (esquerda >= direita)
+    {
+        return;
+    }    
+
+    int meio;
+
+    meio = (esquerda + direita) / 2;
+
+    mergeSort(vetorDeDados, tamanho, esquerda, meio);
+    mergeSort(vetorDeDados, tamanho, meio + 1, direita);
+
+    if (vetorDeDados[meio] <=  vetorDeDados[meio + 1])
+    {
+        return;
+    }
+
+    merge(vetorDeDados, tamanho, esquerda, meio, direita);
+}
+
+void merge(int vetorDeDados[], int tamanho, int esquerda, int meio, int direita)
+{
+    int inicioAux = esquerda, inicioVetorDeDados = esquerda, meioAux = meio + 1, vetorAux[tamanho];
+    
+    for (int i = esquerda; i <= direita; i++)
+    {
+        vetorAux[i] = vetorDeDados[i];
+    }
+
+    while (inicioVetorDeDados <= meio &&meioAux <= direita)
+    {
+        if (vetorAux[inicioVetorDeDados] <= vetorAux[meioAux])
+        {
+            vetorDeDados[inicioAux] <= vetorAux[inicioVetorDeDados];
+            inicioVetorDeDados++;
+        }
+        else
+        {
+            vetorDeDados[inicioAux] = vetorAux[meioAux];
+            meioAux++;
+        }
+
+        inicioAux++;
+    }
+
+    while (inicioVetorDeDados <= meio)
+    {
+        vetorDeDados[inicioAux] = vetorAux[inicioVetorDeDados];
+        inicioAux++;
+        inicioVetorDeDados++;
+    }
+
+    while (meioAux <= direita)
+    {
+        vetorDeDados[inicioAux] = vetorAux[meioAux];
+        inicioAux++;
+        meioAux++;
+    }
 }
