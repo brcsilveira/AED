@@ -6,11 +6,13 @@ void preencheVetor(int vetorDeDados[], int dadosTotal);
 void printVetor(int vetorDeDados[], int dadosTotal);
 int menu(void);
 void algoritmos(int escolha, int vetorDeDados[], int dadosTotal);
+void confereOrdem(int vetorDeDados[], int dadosTotal);
 void insertionSort(int vetorDeDados[], int dadosTotal);
 void selectionSort(int vetorDeDados[], int dadosTotal);
 void quickSort(int vetorDeDados[], int esquerda, int direita);
 void mergeSort(int vetorDeDados[], int tamanho, int esquerda, int direita);
 void merge(int vetorDeDados[], int tamanho, int esquerda, int meio, int direita);
+
 
 int main()
 {
@@ -30,6 +32,8 @@ int main()
     escolhaDoAlgoritmo = menu();
 
     algoritmos(escolhaDoAlgoritmo, vetorDeDados, dadosTotal);
+    confereOrdem(vetorDeDados, dadosTotal);
+    printVetor(vetorDeDados, dadosTotal);
 
     return 0;
 }
@@ -88,12 +92,27 @@ void algoritmos(int escolha, int vetorDeDados[], int dadosTotal)
         break;
         case 3:
             printf("\nEscolha: Quick Sort\n");
-            quickSort(vetorDeDados, NULL, dadosTotal - 1);
+            quickSort(vetorDeDados, 0, dadosTotal - 1);
         break;
         case 4:
             printf("\nEscolha: Merge Sort\n");
         break;
     }
+}
+
+void confereOrdem(int vetorDeDados[], int dadosTotal)
+{
+    for (int i = 0; i < dadosTotal; i++)
+    {
+        if (vetorDeDados[i] > vetorDeDados[i + 1])
+        {
+            printf("\nALGORITMO COM PROBLEMA. VETOR NÃO ESTÁ ORDENADO!\n");
+            return;
+        }
+    }
+
+    printf("\nVETOR ORDENADO COM SUCESSO!\n\nRESULTADO: ");
+    return;
 }
 
 void insertionSort(int vetorDeDados[], int dadosTotal)
@@ -102,15 +121,11 @@ void insertionSort(int vetorDeDados[], int dadosTotal)
 
     for (int i = 1; i < dadosTotal; i++)
     {
-        printf("\n[%d] ", i);
-
         aux = vetorDeDados[i];
         j = i - 1;
 
         while (j >= 0 && aux < vetorDeDados[j])
         {
-            printf("%d, ", j);
-
             vetorDeDados[j + 1] = vetorDeDados[j];
             j--;
         }
