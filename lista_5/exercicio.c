@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
+#include<sys/time.h>
 
 void preencheVetor(int vetorDeDados[], int dadosTotal);
 void printVetor(int vetorDeDados[], int dadosTotal);
@@ -80,22 +81,52 @@ int menu(void)
 
 void algoritmos(int escolha, int vetorDeDados[], int dadosTotal)
 {
+    struct timeval begin, end;
+    long seconds;
+    long microseconds;
+    double elapsed; 
+
     switch (escolha)
     {
         case 1:
             printf("\nEscolha: Insertion Sort\n");
+            gettimeofday(&begin, 0);
             insertionSort(vetorDeDados, dadosTotal);
+            gettimeofday(&end, 0);
+            seconds = end.tv_sec - begin.tv_sec;
+            microseconds = end.tv_usec - begin.tv_usec;
+            elapsed = seconds + microseconds * 1e-6;
+            printf("Time measured: %.9f seconds.\n", elapsed);
         break;
         case 2:
             printf("\nEscolha: Selection Sort\n");
+            gettimeofday(&begin, 0);
             selectionSort(vetorDeDados, dadosTotal);
+            gettimeofday(&end, 0);
+            seconds = end.tv_sec - begin.tv_sec;
+            microseconds = end.tv_usec - begin.tv_usec;
+            elapsed = seconds + microseconds * 1e-6;
+            printf("Time measured: %.9f seconds.\n", elapsed);
         break;
         case 3:
             printf("\nEscolha: Quick Sort\n");
+            gettimeofday(&begin, 0);
             quickSort(vetorDeDados, 0, dadosTotal - 1);
+            gettimeofday(&end, 0);
+            seconds = end.tv_sec - begin.tv_sec;
+            microseconds = end.tv_usec - begin.tv_usec;
+            elapsed = seconds + microseconds * 1e-6;
+            printf("Time measured: %.9f seconds.\n", elapsed);
         break;
         case 4:
             printf("\nEscolha: Merge Sort\n");
+            gettimeofday(&begin, 0);
+            mergeSort(vetorDeDados, dadosTotal, 0, dadosTotal - 1);
+            gettimeofday(&end, 0);
+            seconds = end.tv_sec - begin.tv_sec;
+            microseconds = end.tv_usec - begin.tv_usec;
+            elapsed = seconds + microseconds * 1e-6;
+            printf("Time measured: %.9f seconds.\n", elapsed);
         break;
     }
 }
@@ -223,11 +254,11 @@ void merge(int vetorDeDados[], int tamanho, int esquerda, int meio, int direita)
         vetorAux[i] = vetorDeDados[i];
     }
 
-    while (inicioVetorDeDados <= meio &&meioAux <= direita)
+    while (inicioVetorDeDados <= meio && meioAux <= direita)
     {
         if (vetorAux[inicioVetorDeDados] <= vetorAux[meioAux])
         {
-            vetorDeDados[inicioAux] <= vetorAux[inicioVetorDeDados];
+            vetorDeDados[inicioAux] = vetorAux[inicioVetorDeDados];
             inicioVetorDeDados++;
         }
         else
